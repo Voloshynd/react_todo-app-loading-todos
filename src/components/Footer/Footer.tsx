@@ -9,8 +9,6 @@ type Props = {
 }
 
 export const Footer: React.FC<Props> = React.memo(({ filterBy, todos }) => {
-  const remainingTodos = todos.filter(todo => !todo.completed).length;
-  const hasCompletedTodos = todos.some(todo => todo.completed);
 
   return (
     <footer className="todoapp__footer" data-cy="Footer">

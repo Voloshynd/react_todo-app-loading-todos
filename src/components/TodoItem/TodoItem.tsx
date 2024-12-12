@@ -7,7 +7,6 @@ type Props = {
 };
 
 export const TodoItem: React.FC<Props> = React.memo(({ todo }) => {
-  console.log(todo);
 
   return (
     <div data-cy="Todo" className={cn("todo", {"completed": todo.completed})}>
