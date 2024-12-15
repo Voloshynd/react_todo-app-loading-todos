@@ -1,28 +1,22 @@
-import React from "react";
+import React from 'react';
 import { FilterType } from '../../types/FilterType';
-import { Todo } from "../../types/Todo";
+import { Todo } from '../../types/Todo';
 import cn from 'classnames';
 
 type Props = {
   filterBy: FilterType;
   todos: Todo[];
-}
+};
 
 export const Footer: React.FC<Props> = React.memo(({ filterBy, todos }) => {
-
   return (
     <footer className="todoapp__footer" data-cy="Footer">
       <span className="todo-count" data-cy="TodosCounter">
         3 items left
       </span>
-
       Active link should have the 'selected' class
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className="filter__link selected"
-          data-cy="FilterLinkAll"
-        >
+        <a href="#/" className="filter__link selected" data-cy="FilterLinkAll">
           All
         </a>
 
@@ -42,7 +36,6 @@ export const Footer: React.FC<Props> = React.memo(({ filterBy, todos }) => {
           Completed
         </a>
       </nav>
-
       this button should be disabled if there are no completed todos
       <button
         type="button"
@@ -52,5 +45,5 @@ export const Footer: React.FC<Props> = React.memo(({ filterBy, todos }) => {
         Clear completed
       </button>
     </footer>
-  )
+  );
 });

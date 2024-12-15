@@ -1,21 +1,20 @@
-import React from "react";
-import { Todo } from "../../types/Todo";
-import cn  from 'classnames';
+import React from 'react';
+import { Todo } from '../../types/Todo';
+import cn from 'classnames';
 
 type Props = {
-  todo: Todo,
+  todo: Todo;
 };
 
 export const TodoItem: React.FC<Props> = React.memo(({ todo }) => {
-
   return (
-    <div data-cy="Todo" className={cn("todo", {"completed": todo.completed})}>
+    <div data-cy="Todo" className={cn('todo', { "completed": todo.completed })}>
       <label className="todo__status-label">
         <input
           data-cy="TodoStatus"
           type="checkbox"
           className="todo__status"
-          checked
+          checked={todo.completed}
         />
       </label>
 
@@ -34,5 +33,5 @@ export const TodoItem: React.FC<Props> = React.memo(({ todo }) => {
         <div className="loader" />
       </div>
     </div>
-  )
+  );
 });
