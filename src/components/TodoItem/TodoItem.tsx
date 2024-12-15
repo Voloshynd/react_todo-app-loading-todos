@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Todo } from '../../types/Todo';
 import cn from 'classnames';
 
@@ -7,9 +7,8 @@ type Props = {
 };
 
 const TodoItem: React.FC<Props> = React.memo(({ todo }) => {
-
   return (
-    <div data-cy="Todo" className={cn('todo', { "completed": todo.completed })}>
+    <div data-cy="Todo" className={cn('todo', { completed: todo.completed })}>
       <label className="todo__status-label">
         <input
           data-cy="TodoStatus"

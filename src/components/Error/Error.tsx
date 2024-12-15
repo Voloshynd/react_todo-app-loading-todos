@@ -10,14 +10,10 @@ const Error: React.FC<Props> = React.memo(({ error }) => {
     <div
       data-cy="ErrorNotification"
       className={cn('notification is-danger is-light has-text-weight-normal', {
-        "hidden": !error,
+        hidden: !error,
       })}
     >
-      <button
-        data-cy="HideErrorButton"
-        type="button"
-        className="delete"
-      />
+      <button data-cy="HideErrorButton" type="button" className="delete" />
       {error}
       <br />
     </div>

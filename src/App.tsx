@@ -5,8 +5,8 @@ import { UserWarning } from './UserWarning';
 import { USER_ID } from './api/todos';
 import * as todosServices from '../src/api/todos';
 import { Todo } from './types/Todo';
-import  TodoList  from './components/TodoList/TodoList';
-import Footer  from './components/Footer/Footer';
+import TodoList from './components/TodoList/TodoList';
+import Footer from './components/Footer/Footer';
 import Error from './components/Error/Error';
 import { FilterType } from './types/FilterType';
 import cn from 'classnames';
@@ -19,12 +19,7 @@ enum ErrorMessages {
   updateTodo = 'Unable to update a todo',
 }
 
-
-const getFilteredTodos = (
-  todos: Todo[],
-  filterBy: FilterType,
-): Todo[] => {
-
+const getFilteredTodos = (todos: Todo[], filterBy: FilterType): Todo[] => {
   switch (filterBy) {
     case FilterType.active:
       return todos.filter(todo => !todo.completed);
@@ -36,7 +31,6 @@ const getFilteredTodos = (
 };
 
 export const App: React.FC = () => {
-
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<ErrorMessages | null>(null);
   const [filterBy, setFilterBy] = useState<FilterType>(FilterType.all);
@@ -52,48 +46,52 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     todosServices
-    .getTodos()
-    .then(data => setTodos(data))
-    .catch(() => {
-      setError(ErrorMessages.loadTodos);
+      .getTodos()
+      .then(data => setTodos(data))
+      .catch(() => {
+        setError(ErrorMessages.loadTodos);
 
-      window.setTimeout(() => {
-        setError(null);
+        window.setTimeout(() => {
+          setError(null);
         }, 3000);
       });
-    }, []);
+  }, []);
 
-    useEffect(() => {
-      const notCompletedTodos = todos.filter(todo => !todo.completed).length;
-      setTodosCounter(notCompletedTodos);
-    }, [todos]);
+  useEffect(() => {
+    const notCompletedTodos = todos.filter(todo => !todo.completed).length;
+    setTodosCounter(notCompletedTodos);
+  }, [todos]);
 
-    const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-    }, []);
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  }, []);
 
-    const handleKeyPress = useCallback(
-      (e: React.KeyboardEvent<HTMLFormElement>) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          handleSubmit(e);
-        }
-      },
-      [],
-    );
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent<HTMLFormElement>) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSubmit(e);
+      }
+    },
+    [handleSubmit],
+  );
 
-    if (!USER_ID) {
-      return (
-        <div className="todoapp">
-          <UserWarning />
-        </div>
-      );
-    }
+  const handleSetFilter = useCallback((filter: FilterType) => {
+    setFilterBy(filter);
+  }, []);
 
-    const filteredTodos = getFilteredTodos(todos, filterBy);
-
+  if (!USER_ID) {
     return (
       <div className="todoapp">
+        <UserWarning />
+      </div>
+    );
+  }
+
+  const filteredTodos = getFilteredTodos(todos, filterBy);
+
+  return (
+    <div className="todoapp">
       <h1 className="todoapp__title">todos</h1>
 
       <div className="todoapp__content">
@@ -102,7 +100,9 @@ export const App: React.FC = () => {
           {todos.length > 0 && (
             <button
               type="button"
-              className={cn("todoapp__toggle-all", {active: todos.every(todo => todo.completed)})}
+              className={cn('todoapp__toggle-all', {
+                active: todos.every(todo => todo.completed),
+              })}
               data-cy="ToggleAllButton"
             />
           )}
@@ -120,12 +120,13 @@ export const App: React.FC = () => {
         </header>
 
         <TodoList todos={filteredTodos} />
-        {!!todos.length &&
+        {!!todos.length && (
           <Footer
             filterBy={filterBy}
-            todos={todos}
             todosCounter={todosCounter}
-          />}
+            handleSetFilter={handleSetFilter}
+          />
+        )}
       </div>
 
       {/* DON'T use conditional rendering to hide the notification */}
