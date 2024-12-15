@@ -10,19 +10,17 @@ type Props = {
 
 const Footer: React.FC<Props> = React.memo(
   ({ filterBy, todosCounter, handleSetFilter }) => {
-
     return (
       <footer className="todoapp__footer" data-cy="Footer">
         <span className="todo-count" data-cy="TodosCounter">
-          {/* 3 items left */}
           {todosCounter} {todosCounter === 1 ? 'item left' : 'items left'}
         </span>
         Active link should have the 'selected' class
         <nav className="filter" data-cy="Filter">
           <a
             href="#/"
-            className={cn('filter__link', {
-              selected: filterBy === FilterType.all,
+            className={cn("filter__link", {
+              "selected": filterBy === FilterType.all,
             })}
             data-cy="FilterLinkAll"
             onClick={() => handleSetFilter(FilterType.all)}
@@ -32,8 +30,8 @@ const Footer: React.FC<Props> = React.memo(
 
           <a
             href="#/active"
-            className={cn('filter__link', {
-              selected: filterBy === FilterType.active,
+            className={cn("filter__link", {
+              "selected": filterBy === FilterType.active,
             })}
             data-cy="FilterLinkActive"
             onClick={() => handleSetFilter(FilterType.active)}
@@ -43,8 +41,8 @@ const Footer: React.FC<Props> = React.memo(
 
           <a
             href="#/completed"
-            className={cn('filter__link', {
-              selected: filterBy === FilterType.completed,
+            className={cn("filter__link", {
+              "selected": filterBy === FilterType.completed,
             })}
             data-cy="FilterLinkCompleted"
             onClick={() => handleSetFilter(FilterType.completed)}
@@ -52,7 +50,7 @@ const Footer: React.FC<Props> = React.memo(
             Completed
           </a>
         </nav>
-        this button should be disabled if there are no completed todos
+        {/* this button should be disabled if there are no completed todos */}
         <button
           type="button"
           className="todoapp__clear-completed"
