@@ -15,7 +15,7 @@ const Footer: React.FC<Props> = React.memo(
         <span className="todo-count" data-cy="TodosCounter">
           {todosCounter} {todosCounter === 1 ? 'item left' : 'items left'}
         </span>
-        Active link should have the 'selected' class
+        {/* Active link should have the 'selected' class */}
         <nav className="filter" data-cy="Filter">
           <a
             href="#/"
