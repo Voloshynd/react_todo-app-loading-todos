@@ -5,7 +5,7 @@ type Props = {
   error: string | null;
 };
 
-export const Error: React.FC<Props> = React.memo(({ error }) => {
+const Error: React.FC<Props> = React.memo(({ error }) => {
   return (
     <div
       data-cy="ErrorNotification"
@@ -23,3 +23,6 @@ export const Error: React.FC<Props> = React.memo(({ error }) => {
     </div>
   );
 });
+
+Error.displayName = 'Error';
+export default Error;

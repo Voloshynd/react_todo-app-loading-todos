@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Todo } from '../../types/Todo';
 import cn from 'classnames';
 
@@ -6,7 +6,8 @@ type Props = {
   todo: Todo;
 };
 
-export const TodoItem: React.FC<Props> = React.memo(({ todo }) => {
+const TodoItem: React.FC<Props> = React.memo(({ todo }) => {
+
   return (
     <div data-cy="Todo" className={cn('todo', { "completed": todo.completed })}>
       <label className="todo__status-label">
@@ -35,3 +36,6 @@ export const TodoItem: React.FC<Props> = React.memo(({ todo }) => {
     </div>
   );
 });
+
+TodoItem.displayName = 'TodoItem';
+export default TodoItem;

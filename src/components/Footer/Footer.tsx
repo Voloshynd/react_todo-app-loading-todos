@@ -6,13 +6,17 @@ import cn from 'classnames';
 type Props = {
   filterBy: FilterType;
   todos: Todo[];
+  todosCounter: number
 };
 
-export const Footer: React.FC<Props> = React.memo(({ filterBy, todos }) => {
+const Footer: React.FC<Props> = React.memo(({ filterBy, todos, todosCounter }) => {
+  // const completedTodosCount = todos.filter(todo => todo.completed).length;
+
   return (
     <footer className="todoapp__footer" data-cy="Footer">
       <span className="todo-count" data-cy="TodosCounter">
-        3 items left
+        {/* 3 items left */}
+        {todosCounter} {todosCounter === 1 ? 'item left' : 'items left'}
       </span>
       Active link should have the 'selected' class
       <nav className="filter" data-cy="Filter">
@@ -47,3 +51,7 @@ export const Footer: React.FC<Props> = React.memo(({ filterBy, todos }) => {
     </footer>
   );
 });
+
+Footer.displayName = 'Footer';
+export default Footer;
+

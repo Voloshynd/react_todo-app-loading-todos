@@ -5,9 +5,9 @@ import { UserWarning } from './UserWarning';
 import { USER_ID } from './api/todos';
 import * as todosServices from '../src/api/todos';
 import { Todo } from './types/Todo';
-import { TodoList } from './components/TodoList/TodoList';
-import { Footer } from './components/Footer/Footer';
-import { Error } from './components/Error/Error';
+import  TodoList  from './components/TodoList/TodoList';
+import Footer  from './components/Footer/Footer';
+import Error from './components/Error/Error';
 import { FilterType } from './types/FilterType';
 import cn from 'classnames';
 
@@ -40,6 +40,7 @@ export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<ErrorMessages | null>(null);
   const [filterBy, setFilterBy] = useState<FilterType>(FilterType.all);
+  const [todosCounter, setTodosCounter] = useState(0);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -62,6 +63,11 @@ export const App: React.FC = () => {
       });
     }, []);
 
+    useEffect(() => {
+      const notCompletedTodos = todos.filter(todo => !todo.completed).length;
+      setTodosCounter(notCompletedTodos);
+    }, [todos]);
+
     const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
     }, []);
@@ -83,7 +89,7 @@ export const App: React.FC = () => {
         </div>
       );
     }
-    
+
     const filteredTodos = getFilteredTodos(todos, filterBy);
 
     return (
@@ -114,7 +120,12 @@ export const App: React.FC = () => {
         </header>
 
         <TodoList todos={filteredTodos} />
-        {!!todos.length && <Footer filterBy={filterBy} todos={todos} />}
+        {!!todos.length &&
+          <Footer
+            filterBy={filterBy}
+            todos={todos}
+            todosCounter={todosCounter}
+          />}
       </div>
 
       {/* DON'T use conditional rendering to hide the notification */}
