@@ -36,13 +36,6 @@ const getFilteredTodos = (
 };
 
 export const App: React.FC = () => {
-  if (!USER_ID) {
-    return (
-      <div className="todoapp">
-        <UserWarning />
-      </div>
-    );
-  }
 
   const [todos, setTodos] = useState<Todo[]>([]);
   const [error, setError] = useState<ErrorMessages | null>(null);
@@ -58,35 +51,43 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     todosServices
-      .getTodos()
-      .then(data => setTodos(data))
-      .catch(() => {
-        setError(ErrorMessages.loadTodos);
+    .getTodos()
+    .then(data => setTodos(data))
+    .catch(() => {
+      setError(ErrorMessages.loadTodos);
 
-        window.setTimeout(() => {
-          setError(null);
+      window.setTimeout(() => {
+        setError(null);
         }, 3000);
       });
-  }, []);
+    }, []);
 
-  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  }, []);
+    const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+    }, []);
 
-  const handleKeyPress = useCallback(
-    (e: React.KeyboardEvent<HTMLFormElement>) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        handleSubmit(e);
-      }
-    },
-    [],
-  );
+    const handleKeyPress = useCallback(
+      (e: React.KeyboardEvent<HTMLFormElement>) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleSubmit(e);
+        }
+      },
+      [],
+    );
 
-  const filteredTodos = getFilteredTodos(todos, filterBy);
+    if (!USER_ID) {
+      return (
+        <div className="todoapp">
+          <UserWarning />
+        </div>
+      );
+    }
+    
+    const filteredTodos = getFilteredTodos(todos, filterBy);
 
-  return (
-    <div className="todoapp">
+    return (
+      <div className="todoapp">
       <h1 className="todoapp__title">todos</h1>
 
       <div className="todoapp__content">
